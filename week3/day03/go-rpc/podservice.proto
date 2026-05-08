@@ -1,0 +1,29 @@
+syntax = "proto3";
+option go_package = "./pb;pb";
+
+service PodManager {
+  rpc CreatePod (CreatePodRequest) returns (CreatePodReply);
+  rpc DeletePod (DeletePodRequest) returns (DeletePodReply);
+}
+
+// 创建设备请求（增加 namespace 字段）
+message CreatePodRequest {
+  string pod_name = 1;
+  string image = 2;
+  string namespace = 3; // 测试固定传 test
+}
+
+message CreatePodReply {
+  bool success = 1;
+  string message = 2;
+}
+
+message DeletePodRequest {
+  string pod_name = 1;
+  string namespace = 2;
+}
+
+message DeletePodReply {
+  bool success = 1;
+  string message = 2;
+}
