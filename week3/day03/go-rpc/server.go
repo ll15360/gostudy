@@ -74,6 +74,22 @@ func (s *PodManagerServer) DeletePod(ctx context.Context, req *pb.DeletePodReque
 	return &pb.DeletePodReply{Success: true, Message: "删除成功"}, nil
 }
 
+// TODO:添加单个pod的资源限制
+
+// TODO:添加副本数量的参数:不然一个deployment只有一个副本pod
+
+// TODO:添加这个滚动更新
+
+// TODO:如何指定这个pod中的容器启动顺序
+
+// TODO:服务暴露,拉起的pod如何在外网能够成功访问这个服务
+
+// 数据的持久化和共享问题
+
+// 权限问题
+
+// 环境变量
+
 func main() {
 	initK8s()
 	lis, err := net.Listen("tcp", "0.0.0.0:50051")
