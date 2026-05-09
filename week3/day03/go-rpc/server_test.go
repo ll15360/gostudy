@@ -41,11 +41,16 @@ func TestCreatePod_Success(t *testing.T) {
 		t.Fatal("客户端未初始化，请先启动gRPC服务端！")
 	}
 
-	// 构造请求
+	// 构造请求，包含资源配置验证
 	req := &pb.CreatePodRequest{
-		PodName:   "test-nginx-01",
-		Image:     "nginx:alpine",
-		Namespace: testNamespace,
+		PodName:       "test-nginx-02",
+		Image:         "nginx:alpine",
+		Namespace:     testNamespace,
+		Replicas:      2,
+		CpuRequest:    "100m",
+		CpuLimit:      "300m",
+		MemoryRequest: "128Mi",
+		MemoryLimit:   "256Mi",
 	}
 
 	// 调用接口
@@ -62,6 +67,34 @@ func TestCreatePod_Success(t *testing.T) {
 	t.Log("✅ 测试通过：Deployment 创建成功！")
 }
 
+// ===================== 缺省配额情况测试：创建带有默认资源和副本的Deployment =====================
+func TestCreatePod_DefaultSettings(t *testing.T) {
+	if client == nil {
+		t.Fatal("客户端未初始化，请先启动gRPC服务端！")
+	}
+
+	// 构造请求，不穿入 Replicas, CpuRequest, 等配置参数 (即采用空值与0值)
+	req := &pb.CreatePodRequest{
+		PodName:   "test-nginx-default",
+		Image:     "nginx:alpine",
+		Namespace: testNamespace,
+		// Replicas，CpuRequest，MemRequest等全部忽略不传...
+	}
+
+	// 调用接口
+	resp, err := client.CreatePod(context.Background(), req)
+	if err != nil {
+		t.Fatalf("调用缺省接口失败：%v", err)
+	}
+
+	// 校验结果
+	if !resp.Success {
+		t.Fatalf("缺省参数创建失败：%s", resp.Message)
+	}
+
+	t.Log("✅ 测试通过：缺省配额 Deployment (test-nginx-default) 创建成功！预期自动回填：1副本, 100m-200m CPU")
+}
+
 // ===================== 第二个测试：删除存在的Deployment（成功） =====================
 func TestDeletePod_Success(t *testing.T) {
 	if client == nil {
@@ -69,7 +102,7 @@ func TestDeletePod_Success(t *testing.T) {
 	}
 
 	req := &pb.DeletePodRequest{
-		PodName:   "test-nginx-01",
+		PodName:   "test-nginx-02",
 		Namespace: testNamespace,
 	}
 
@@ -92,7 +125,7 @@ func TestDeletePod_NotFound(t *testing.T) {
 	}
 
 	req := &pb.DeletePodRequest{
-		PodName:   "not-exist-pod-12345",
+		PodName:   "test-nginx-01",
 		Namespace: testNamespace,
 	}
 

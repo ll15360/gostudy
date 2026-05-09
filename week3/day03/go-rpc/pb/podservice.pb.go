@@ -21,12 +21,18 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 创建设备请求（增加 namespace 字段）
+// 创建设备请求（增加 namespace 字段及资源配额参数）
 type CreatePodRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	PodName       string                 `protobuf:"bytes,1,opt,name=pod_name,json=podName,proto3" json:"pod_name,omitempty"`
-	Image         string                 `protobuf:"bytes,2,opt,name=image,proto3" json:"image,omitempty"`
-	Namespace     string                 `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"` // 测试固定传 test
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	PodName   string                 `protobuf:"bytes,1,opt,name=pod_name,json=podName,proto3" json:"pod_name,omitempty"`
+	Image     string                 `protobuf:"bytes,2,opt,name=image,proto3" json:"image,omitempty"`
+	Namespace string                 `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"` // 测试固定传 test
+	// 副本数量与资源配额限制
+	Replicas      int32  `protobuf:"varint,4,opt,name=replicas,proto3" json:"replicas,omitempty"`
+	CpuRequest    string `protobuf:"bytes,5,opt,name=cpu_request,json=cpuRequest,proto3" json:"cpu_request,omitempty"`
+	CpuLimit      string `protobuf:"bytes,6,opt,name=cpu_limit,json=cpuLimit,proto3" json:"cpu_limit,omitempty"`
+	MemoryRequest string `protobuf:"bytes,7,opt,name=memory_request,json=memoryRequest,proto3" json:"memory_request,omitempty"`
+	MemoryLimit   string `protobuf:"bytes,8,opt,name=memory_limit,json=memoryLimit,proto3" json:"memory_limit,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -78,6 +84,41 @@ func (x *CreatePodRequest) GetImage() string {
 func (x *CreatePodRequest) GetNamespace() string {
 	if x != nil {
 		return x.Namespace
+	}
+	return ""
+}
+
+func (x *CreatePodRequest) GetReplicas() int32 {
+	if x != nil {
+		return x.Replicas
+	}
+	return 0
+}
+
+func (x *CreatePodRequest) GetCpuRequest() string {
+	if x != nil {
+		return x.CpuRequest
+	}
+	return ""
+}
+
+func (x *CreatePodRequest) GetCpuLimit() string {
+	if x != nil {
+		return x.CpuLimit
+	}
+	return ""
+}
+
+func (x *CreatePodRequest) GetMemoryRequest() string {
+	if x != nil {
+		return x.MemoryRequest
+	}
+	return ""
+}
+
+func (x *CreatePodRequest) GetMemoryLimit() string {
+	if x != nil {
+		return x.MemoryLimit
 	}
 	return ""
 }
@@ -242,11 +283,17 @@ var File_podservice_proto protoreflect.FileDescriptor
 
 const file_podservice_proto_rawDesc = "" +
 	"\n" +
-	"\x10podservice.proto\"a\n" +
+	"\x10podservice.proto\"\x85\x02\n" +
 	"\x10CreatePodRequest\x12\x19\n" +
 	"\bpod_name\x18\x01 \x01(\tR\apodName\x12\x14\n" +
 	"\x05image\x18\x02 \x01(\tR\x05image\x12\x1c\n" +
-	"\tnamespace\x18\x03 \x01(\tR\tnamespace\"D\n" +
+	"\tnamespace\x18\x03 \x01(\tR\tnamespace\x12\x1a\n" +
+	"\breplicas\x18\x04 \x01(\x05R\breplicas\x12\x1f\n" +
+	"\vcpu_request\x18\x05 \x01(\tR\n" +
+	"cpuRequest\x12\x1b\n" +
+	"\tcpu_limit\x18\x06 \x01(\tR\bcpuLimit\x12%\n" +
+	"\x0ememory_request\x18\a \x01(\tR\rmemoryRequest\x12!\n" +
+	"\fmemory_limit\x18\b \x01(\tR\vmemoryLimit\"D\n" +
 	"\x0eCreatePodReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"K\n" +

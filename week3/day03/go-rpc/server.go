@@ -10,6 +10,7 @@ import (
 	"google.golang.org/grpc"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
@@ -46,7 +47,43 @@ func initK8s() {
 
 func (s *PodManagerServer) CreatePod(ctx context.Context, req *pb.CreatePodRequest) (*pb.CreatePodReply, error) {
 	log.Printf("创建请求：NS=%s, Name=%s", req.Namespace, req.PodName)
+
+	// 1. 副本数默认值处理
 	replicas := int32(1)
+	if req.Replicas > 0 {
+		replicas = req.Replicas
+	}
+
+	// 2. 资源默认值处理
+	cpuReq := req.CpuRequest
+	if cpuReq == "" {
+		cpuReq = "100m"
+	}
+	cpuLim := req.CpuLimit
+	if cpuLim == "" {
+		cpuLim = "200m"
+	}
+	memReq := req.MemoryRequest
+	if memReq == "" {
+		memReq = "128Mi"
+	}
+	memLim := req.MemoryLimit
+	if memLim == "" {
+		memLim = "256Mi"
+	}
+
+	// 3. 构建 K8s 资源结构体
+	resources := corev1.ResourceRequirements{
+		Requests: corev1.ResourceList{
+			corev1.ResourceCPU:    resource.MustParse(cpuReq),
+			corev1.ResourceMemory: resource.MustParse(memReq),
+		},
+		Limits: corev1.ResourceList{
+			corev1.ResourceCPU:    resource.MustParse(cpuLim),
+			corev1.ResourceMemory: resource.MustParse(memLim),
+		},
+	}
+
 	deploy := &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{Name: req.PodName, Namespace: req.Namespace},
 		Spec: appsv1.DeploymentSpec{
@@ -54,7 +91,13 @@ func (s *PodManagerServer) CreatePod(ctx context.Context, req *pb.CreatePodReque
 			Selector: &metav1.LabelSelector{MatchLabels: map[string]string{"app": req.PodName}},
 			Template: corev1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{Labels: map[string]string{"app": req.PodName}},
-				Spec:       corev1.PodSpec{Containers: []corev1.Container{{Name: req.PodName, Image: req.Image}}},
+				Spec: corev1.PodSpec{
+					Containers: []corev1.Container{{
+						Name:      req.PodName,
+						Image:     req.Image,
+						Resources: resources,
+					}},
+				},
 			},
 		},
 	}
@@ -74,9 +117,7 @@ func (s *PodManagerServer) DeletePod(ctx context.Context, req *pb.DeletePodReque
 	return &pb.DeletePodReply{Success: true, Message: "删除成功"}, nil
 }
 
-// TODO:添加单个pod的资源限制
-
-// TODO:添加副本数量的参数:不然一个deployment只有一个副本pod
+// TODO:待添加数据库持久化
 
 // TODO:添加这个滚动更新
 

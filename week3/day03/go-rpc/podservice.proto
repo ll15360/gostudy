@@ -6,11 +6,18 @@ service PodManager {
   rpc DeletePod (DeletePodRequest) returns (DeletePodReply);
 }
 
-// 创建设备请求（增加 namespace 字段）
+// 创建设备请求（增加 namespace 字段及资源配额参数）
 message CreatePodRequest {
   string pod_name = 1;
   string image = 2;
   string namespace = 3; // 测试固定传 test
+
+  // 副本数量与资源配额限制
+  int32 replicas = 4;
+  string cpu_request = 5;
+  string cpu_limit = 6;
+  string memory_request = 7;
+  string memory_limit = 8;
 }
 
 message CreatePodReply {
