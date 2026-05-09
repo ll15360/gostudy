@@ -81,6 +81,45 @@ Never：绝不重启
 集群调度时会根据资源余量分配节点
 生产必配，不学只会裸奔跑 Pod。
 
+# 容器的的探针
+就绪探针 Readiness：应用是否准备就绪,没有Ready不会承接流量
+# 探测失败后果
+不会重启容器
+把 Pod 从 Service 负载均衡池中剔除，不再转发流量
+滚动更新里：探针不过，绝不删旧 Pod
+
+
+存活探针 Liveness：应用是否挂了，挂了会重启容器
+# 作用
+判断容器是否卡死、僵死、假死（进程还在，但服务已经不能用）。
+探测失败后果Kubelet 直接杀掉容器 → 重建重启。
+
+# 三种探测方式
+# 方式1: httpGet:kubelet 
+kubelet拿到容器的 Pod IP + 容器端口
+直接发起 GET http://<pod-ip>:<port><path>
+只要返回 200~399 之间的状态码 = 探测成功
+4xx/5xx / 连不上 / 超时 = 探测失败
+
+示例:
+# 就绪探针示例(存活和启动一致)
+readinessProbe:
+  httpGet:
+    path: /actuator/health  # 你的健康检查接口
+    port: 8080              # 容器内部端口
+    httpHeaders:            # 可选：带请求头
+    - name: Custom-Header
+      value: health-check
+  initialDelaySeconds: 3
+  periodSeconds: 5
+
+# 方式2 
+kubelet尝试和容器的端口 建立 TCP 连接
+连接建立成功 = 探测成功
+连接拒绝 / 超时 = 探测失败 (注意:只是检查这个端口是否开启)
+
+启动探针 Startup：启动慢不被误杀，启动完才开启另外两个探针
+
 # 标签 Label + 标签选择器
 
 
