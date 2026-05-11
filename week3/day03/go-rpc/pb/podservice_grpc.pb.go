@@ -19,16 +19,28 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PodManager_CreatePod_FullMethodName = "/PodManager/CreatePod"
-	PodManager_DeletePod_FullMethodName = "/PodManager/DeletePod"
+	PodManager_CreateDeployment_FullMethodName = "/PodManager/CreateDeployment"
+	PodManager_DeleteDeployment_FullMethodName = "/PodManager/DeleteDeployment"
+	PodManager_CreatePod_FullMethodName        = "/PodManager/CreatePod"
+	PodManager_DeletePod_FullMethodName        = "/PodManager/DeletePod"
+	PodManager_GetPod_FullMethodName           = "/PodManager/GetPod"
+	PodManager_CreateService_FullMethodName    = "/PodManager/CreateService"
+	PodManager_DeleteService_FullMethodName    = "/PodManager/DeleteService"
+	PodManager_GetService_FullMethodName       = "/PodManager/GetService"
 )
 
 // PodManagerClient is the client API for PodManager service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PodManagerClient interface {
+	CreateDeployment(ctx context.Context, in *CreateDeploymentRequest, opts ...grpc.CallOption) (*CreateDeploymentReply, error)
+	DeleteDeployment(ctx context.Context, in *DeleteDeploymentRequest, opts ...grpc.CallOption) (*DeleteDeploymentReply, error)
 	CreatePod(ctx context.Context, in *CreatePodRequest, opts ...grpc.CallOption) (*CreatePodReply, error)
 	DeletePod(ctx context.Context, in *DeletePodRequest, opts ...grpc.CallOption) (*DeletePodReply, error)
+	GetPod(ctx context.Context, in *GetPodRequest, opts ...grpc.CallOption) (*GetPodReply, error)
+	CreateService(ctx context.Context, in *CreateServiceRequest, opts ...grpc.CallOption) (*CreateServiceReply, error)
+	DeleteService(ctx context.Context, in *DeleteServiceRequest, opts ...grpc.CallOption) (*DeleteServiceReply, error)
+	GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*GetServiceReply, error)
 }
 
 type podManagerClient struct {
@@ -37,6 +49,26 @@ type podManagerClient struct {
 
 func NewPodManagerClient(cc grpc.ClientConnInterface) PodManagerClient {
 	return &podManagerClient{cc}
+}
+
+func (c *podManagerClient) CreateDeployment(ctx context.Context, in *CreateDeploymentRequest, opts ...grpc.CallOption) (*CreateDeploymentReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateDeploymentReply)
+	err := c.cc.Invoke(ctx, PodManager_CreateDeployment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *podManagerClient) DeleteDeployment(ctx context.Context, in *DeleteDeploymentRequest, opts ...grpc.CallOption) (*DeleteDeploymentReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteDeploymentReply)
+	err := c.cc.Invoke(ctx, PodManager_DeleteDeployment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *podManagerClient) CreatePod(ctx context.Context, in *CreatePodRequest, opts ...grpc.CallOption) (*CreatePodReply, error) {
@@ -59,12 +91,58 @@ func (c *podManagerClient) DeletePod(ctx context.Context, in *DeletePodRequest, 
 	return out, nil
 }
 
+func (c *podManagerClient) GetPod(ctx context.Context, in *GetPodRequest, opts ...grpc.CallOption) (*GetPodReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPodReply)
+	err := c.cc.Invoke(ctx, PodManager_GetPod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *podManagerClient) CreateService(ctx context.Context, in *CreateServiceRequest, opts ...grpc.CallOption) (*CreateServiceReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateServiceReply)
+	err := c.cc.Invoke(ctx, PodManager_CreateService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *podManagerClient) DeleteService(ctx context.Context, in *DeleteServiceRequest, opts ...grpc.CallOption) (*DeleteServiceReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteServiceReply)
+	err := c.cc.Invoke(ctx, PodManager_DeleteService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *podManagerClient) GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*GetServiceReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetServiceReply)
+	err := c.cc.Invoke(ctx, PodManager_GetService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PodManagerServer is the server API for PodManager service.
 // All implementations must embed UnimplementedPodManagerServer
 // for forward compatibility.
 type PodManagerServer interface {
+	CreateDeployment(context.Context, *CreateDeploymentRequest) (*CreateDeploymentReply, error)
+	DeleteDeployment(context.Context, *DeleteDeploymentRequest) (*DeleteDeploymentReply, error)
 	CreatePod(context.Context, *CreatePodRequest) (*CreatePodReply, error)
 	DeletePod(context.Context, *DeletePodRequest) (*DeletePodReply, error)
+	GetPod(context.Context, *GetPodRequest) (*GetPodReply, error)
+	CreateService(context.Context, *CreateServiceRequest) (*CreateServiceReply, error)
+	DeleteService(context.Context, *DeleteServiceRequest) (*DeleteServiceReply, error)
+	GetService(context.Context, *GetServiceRequest) (*GetServiceReply, error)
 	mustEmbedUnimplementedPodManagerServer()
 }
 
@@ -75,11 +153,29 @@ type PodManagerServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPodManagerServer struct{}
 
+func (UnimplementedPodManagerServer) CreateDeployment(context.Context, *CreateDeploymentRequest) (*CreateDeploymentReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateDeployment not implemented")
+}
+func (UnimplementedPodManagerServer) DeleteDeployment(context.Context, *DeleteDeploymentRequest) (*DeleteDeploymentReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteDeployment not implemented")
+}
 func (UnimplementedPodManagerServer) CreatePod(context.Context, *CreatePodRequest) (*CreatePodReply, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreatePod not implemented")
 }
 func (UnimplementedPodManagerServer) DeletePod(context.Context, *DeletePodRequest) (*DeletePodReply, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeletePod not implemented")
+}
+func (UnimplementedPodManagerServer) GetPod(context.Context, *GetPodRequest) (*GetPodReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetPod not implemented")
+}
+func (UnimplementedPodManagerServer) CreateService(context.Context, *CreateServiceRequest) (*CreateServiceReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateService not implemented")
+}
+func (UnimplementedPodManagerServer) DeleteService(context.Context, *DeleteServiceRequest) (*DeleteServiceReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteService not implemented")
+}
+func (UnimplementedPodManagerServer) GetService(context.Context, *GetServiceRequest) (*GetServiceReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetService not implemented")
 }
 func (UnimplementedPodManagerServer) mustEmbedUnimplementedPodManagerServer() {}
 func (UnimplementedPodManagerServer) testEmbeddedByValue()                    {}
@@ -100,6 +196,42 @@ func RegisterPodManagerServer(s grpc.ServiceRegistrar, srv PodManagerServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&PodManager_ServiceDesc, srv)
+}
+
+func _PodManager_CreateDeployment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDeploymentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PodManagerServer).CreateDeployment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PodManager_CreateDeployment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PodManagerServer).CreateDeployment(ctx, req.(*CreateDeploymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PodManager_DeleteDeployment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteDeploymentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PodManagerServer).DeleteDeployment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PodManager_DeleteDeployment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PodManagerServer).DeleteDeployment(ctx, req.(*DeleteDeploymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _PodManager_CreatePod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -138,6 +270,78 @@ func _PodManager_DeletePod_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PodManager_GetPod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PodManagerServer).GetPod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PodManager_GetPod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PodManagerServer).GetPod(ctx, req.(*GetPodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PodManager_CreateService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PodManagerServer).CreateService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PodManager_CreateService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PodManagerServer).CreateService(ctx, req.(*CreateServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PodManager_DeleteService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PodManagerServer).DeleteService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PodManager_DeleteService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PodManagerServer).DeleteService(ctx, req.(*DeleteServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PodManager_GetService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PodManagerServer).GetService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PodManager_GetService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PodManagerServer).GetService(ctx, req.(*GetServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PodManager_ServiceDesc is the grpc.ServiceDesc for PodManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -146,12 +350,36 @@ var PodManager_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PodManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "CreateDeployment",
+			Handler:    _PodManager_CreateDeployment_Handler,
+		},
+		{
+			MethodName: "DeleteDeployment",
+			Handler:    _PodManager_DeleteDeployment_Handler,
+		},
+		{
 			MethodName: "CreatePod",
 			Handler:    _PodManager_CreatePod_Handler,
 		},
 		{
 			MethodName: "DeletePod",
 			Handler:    _PodManager_DeletePod_Handler,
+		},
+		{
+			MethodName: "GetPod",
+			Handler:    _PodManager_GetPod_Handler,
+		},
+		{
+			MethodName: "CreateService",
+			Handler:    _PodManager_CreateService_Handler,
+		},
+		{
+			MethodName: "DeleteService",
+			Handler:    _PodManager_DeleteService_Handler,
+		},
+		{
+			MethodName: "GetService",
+			Handler:    _PodManager_GetService_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
