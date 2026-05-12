@@ -1,0 +1,20 @@
+global:
+  namespace: Development
+  env_name: test
+
+server:
+  app: go-rpc
+  server: podmanager
+  service:
+    - name: trpc.go-rpc.podmanager.PodManager
+      ip: 0.0.0.0
+      port: 50051
+      protocol: trpc
+      timeout: 30000
+
+database:
+  user: root
+  password: root1234
+  host: 110.40.187.44
+  port: "30306"
+  name: k8s

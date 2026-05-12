@@ -2,12 +2,81 @@ syntax = "proto3";
 option go_package = "./pb;pb";
 
 service PodManager {
+  rpc CreateDeployment (CreateDeploymentRequest) returns (CreateDeploymentReply);
+  rpc DeleteDeployment (DeleteDeploymentRequest) returns (DeleteDeploymentReply);
+
   rpc CreatePod (CreatePodRequest) returns (CreatePodReply);
   rpc DeletePod (DeletePodRequest) returns (DeletePodReply);
+  rpc GetPod (GetPodRequest) returns (GetPodReply);
+
+  rpc CreateService (CreateServiceRequest) returns (CreateServiceReply);
+  rpc DeleteService (DeleteServiceRequest) returns (DeleteServiceReply);
+  rpc GetService (GetServiceRequest) returns (GetServiceReply);
 }
 
-// 创建设备请求（增加 namespace 字段及资源配额参数）
-message CreatePodRequest {
+// ===== 环境变量配置 =====
+message EnvVar {
+    string name = 1;
+    string value = 2;
+}
+
+// ===== 存储卷配置 =====
+message StorageConfig {
+    string type = 1;         // e.g., "hostPath", "emptyDir", "pvc"
+    string name = 2;         // 卷名称
+    string mount_path = 3;   // 容器内挂载路径
+    
+    // 依据 type 的具体配置参数
+    string host_path = 4;    // type=hostPath 时填写
+    string pvc_name = 5;     // type=pvc 时填写
+}
+
+// ===== Service 层请求与响应 =====
+message PortConfig {
+    int32 port = 1;          // Service 暴漏端口
+    int32 target_port = 2;   // 转发后端 Pod 端口
+    int32 node_port = 3;     // NodePort (仅在 type=NodePort 下有效)
+}
+
+message CreateServiceRequest {
+    string service_name = 1;
+    string namespace = 2;
+    string type = 3; // "ClusterIP", "NodePort" 等
+    map<string, string> selector = 4; // 要代理的对应 Pod 的标签
+    repeated PortConfig ports = 5;    // 端口配置列表
+}
+
+message CreateServiceReply {
+    bool success = 1;
+    string message = 2;
+}
+
+message DeleteServiceRequest {
+    string service_name = 1;
+    string namespace = 2;
+}
+
+message DeleteServiceReply {
+    bool success = 1;
+    string message = 2;
+}
+
+message GetServiceRequest {
+    string service_name = 1;
+    string namespace = 2;
+}
+
+message GetServiceReply {
+    bool success = 1;
+    string message = 2;
+    string type = 3;
+    map<string, string> selector = 4;
+    repeated PortConfig ports = 5;
+    string cluster_ip = 6;
+}
+
+// ===== Deployment 请求 =====
+message CreateDeploymentRequest {
   string pod_name = 1;
   string image = 2;
   string namespace = 3; // 测试固定传 test
@@ -18,6 +87,36 @@ message CreatePodRequest {
   string cpu_limit = 6;
   string memory_request = 7;
   string memory_limit = 8;
+  repeated StorageConfig storages = 9; 
+  repeated EnvVar envs = 10;
+}
+
+message CreateDeploymentReply {
+  bool success = 1;
+  string message = 2;
+}
+
+message DeleteDeploymentRequest {
+  string pod_name = 1;
+  string namespace = 2;
+}
+
+message DeleteDeploymentReply {
+  bool success = 1;
+  string message = 2;
+}
+
+// ===== Pod ======
+message CreatePodRequest {
+  string pod_name = 1;
+  string image = 2;
+  string namespace = 3;
+  string cpu_request = 5;
+  string cpu_limit = 6;
+  string memory_request = 7;
+  string memory_limit = 8;
+  repeated StorageConfig storages = 9; 
+  repeated EnvVar envs = 10;
 }
 
 message CreatePodReply {
@@ -33,4 +132,16 @@ message DeletePodRequest {
 message DeletePodReply {
   bool success = 1;
   string message = 2;
+}
+
+message GetPodRequest {
+  string pod_name = 1;
+  string namespace = 2;
+}
+
+message GetPodReply {
+  bool success = 1;
+  string message = 2;
+  string status = 3;
+  string image = 4;
 }

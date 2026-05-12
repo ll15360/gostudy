@@ -21,25 +21,852 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 创建设备请求（增加 namespace 字段及资源配额参数）
+type EnvVar struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EnvVar) Reset() {
+	*x = EnvVar{}
+	mi := &file_podservice_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EnvVar) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnvVar) ProtoMessage() {}
+
+func (x *EnvVar) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnvVar.ProtoReflect.Descriptor instead.
+func (*EnvVar) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *EnvVar) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *EnvVar) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+type StorageConfig struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Type          string                 `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	MountPath     string                 `protobuf:"bytes,3,opt,name=mount_path,json=mountPath,proto3" json:"mount_path,omitempty"`
+	HostPath      string                 `protobuf:"bytes,4,opt,name=host_path,json=hostPath,proto3" json:"host_path,omitempty"`
+	PvcName       string                 `protobuf:"bytes,5,opt,name=pvc_name,json=pvcName,proto3" json:"pvc_name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StorageConfig) Reset() {
+	*x = StorageConfig{}
+	mi := &file_podservice_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StorageConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StorageConfig) ProtoMessage() {}
+
+func (x *StorageConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StorageConfig.ProtoReflect.Descriptor instead.
+func (*StorageConfig) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *StorageConfig) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *StorageConfig) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *StorageConfig) GetMountPath() string {
+	if x != nil {
+		return x.MountPath
+	}
+	return ""
+}
+
+func (x *StorageConfig) GetHostPath() string {
+	if x != nil {
+		return x.HostPath
+	}
+	return ""
+}
+
+func (x *StorageConfig) GetPvcName() string {
+	if x != nil {
+		return x.PvcName
+	}
+	return ""
+}
+
+type PortConfig struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Port          int32                  `protobuf:"varint,1,opt,name=port,proto3" json:"port,omitempty"`
+	TargetPort    int32                  `protobuf:"varint,2,opt,name=target_port,json=targetPort,proto3" json:"target_port,omitempty"`
+	NodePort      int32                  `protobuf:"varint,3,opt,name=node_port,json=nodePort,proto3" json:"node_port,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PortConfig) Reset() {
+	*x = PortConfig{}
+	mi := &file_podservice_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PortConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PortConfig) ProtoMessage() {}
+
+func (x *PortConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PortConfig.ProtoReflect.Descriptor instead.
+func (*PortConfig) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *PortConfig) GetPort() int32 {
+	if x != nil {
+		return x.Port
+	}
+	return 0
+}
+
+func (x *PortConfig) GetTargetPort() int32 {
+	if x != nil {
+		return x.TargetPort
+	}
+	return 0
+}
+
+func (x *PortConfig) GetNodePort() int32 {
+	if x != nil {
+		return x.NodePort
+	}
+	return 0
+}
+
+type CreateServiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ServiceName   string                 `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
+	Namespace     string                 `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Type          string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
+	Selector      map[string]string      `protobuf:"bytes,4,rep,name=selector,proto3" json:"selector,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Ports         []*PortConfig          `protobuf:"bytes,5,rep,name=ports,proto3" json:"ports,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateServiceRequest) Reset() {
+	*x = CreateServiceRequest{}
+	mi := &file_podservice_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateServiceRequest) ProtoMessage() {}
+
+func (x *CreateServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateServiceRequest.ProtoReflect.Descriptor instead.
+func (*CreateServiceRequest) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CreateServiceRequest) GetServiceName() string {
+	if x != nil {
+		return x.ServiceName
+	}
+	return ""
+}
+
+func (x *CreateServiceRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *CreateServiceRequest) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *CreateServiceRequest) GetSelector() map[string]string {
+	if x != nil {
+		return x.Selector
+	}
+	return nil
+}
+
+func (x *CreateServiceRequest) GetPorts() []*PortConfig {
+	if x != nil {
+		return x.Ports
+	}
+	return nil
+}
+
+type CreateServiceReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateServiceReply) Reset() {
+	*x = CreateServiceReply{}
+	mi := &file_podservice_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateServiceReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateServiceReply) ProtoMessage() {}
+
+func (x *CreateServiceReply) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateServiceReply.ProtoReflect.Descriptor instead.
+func (*CreateServiceReply) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CreateServiceReply) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *CreateServiceReply) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type DeleteServiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ServiceName   string                 `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
+	Namespace     string                 `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteServiceRequest) Reset() {
+	*x = DeleteServiceRequest{}
+	mi := &file_podservice_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteServiceRequest) ProtoMessage() {}
+
+func (x *DeleteServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteServiceRequest.ProtoReflect.Descriptor instead.
+func (*DeleteServiceRequest) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *DeleteServiceRequest) GetServiceName() string {
+	if x != nil {
+		return x.ServiceName
+	}
+	return ""
+}
+
+func (x *DeleteServiceRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+type DeleteServiceReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteServiceReply) Reset() {
+	*x = DeleteServiceReply{}
+	mi := &file_podservice_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteServiceReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteServiceReply) ProtoMessage() {}
+
+func (x *DeleteServiceReply) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteServiceReply.ProtoReflect.Descriptor instead.
+func (*DeleteServiceReply) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *DeleteServiceReply) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeleteServiceReply) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type GetServiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ServiceName   string                 `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
+	Namespace     string                 `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetServiceRequest) Reset() {
+	*x = GetServiceRequest{}
+	mi := &file_podservice_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetServiceRequest) ProtoMessage() {}
+
+func (x *GetServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetServiceRequest.ProtoReflect.Descriptor instead.
+func (*GetServiceRequest) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetServiceRequest) GetServiceName() string {
+	if x != nil {
+		return x.ServiceName
+	}
+	return ""
+}
+
+func (x *GetServiceRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+type GetServiceReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Type          string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
+	Selector      map[string]string      `protobuf:"bytes,4,rep,name=selector,proto3" json:"selector,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Ports         []*PortConfig          `protobuf:"bytes,5,rep,name=ports,proto3" json:"ports,omitempty"`
+	ClusterIp     string                 `protobuf:"bytes,6,opt,name=cluster_ip,json=clusterIp,proto3" json:"cluster_ip,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetServiceReply) Reset() {
+	*x = GetServiceReply{}
+	mi := &file_podservice_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetServiceReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetServiceReply) ProtoMessage() {}
+
+func (x *GetServiceReply) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetServiceReply.ProtoReflect.Descriptor instead.
+func (*GetServiceReply) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetServiceReply) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *GetServiceReply) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GetServiceReply) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *GetServiceReply) GetSelector() map[string]string {
+	if x != nil {
+		return x.Selector
+	}
+	return nil
+}
+
+func (x *GetServiceReply) GetPorts() []*PortConfig {
+	if x != nil {
+		return x.Ports
+	}
+	return nil
+}
+
+func (x *GetServiceReply) GetClusterIp() string {
+	if x != nil {
+		return x.ClusterIp
+	}
+	return ""
+}
+
+type CreateDeploymentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PodName       string                 `protobuf:"bytes,1,opt,name=pod_name,json=podName,proto3" json:"pod_name,omitempty"`
+	Image         string                 `protobuf:"bytes,2,opt,name=image,proto3" json:"image,omitempty"`
+	Namespace     string                 `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Replicas      int32                  `protobuf:"varint,4,opt,name=replicas,proto3" json:"replicas,omitempty"`
+	CpuRequest    string                 `protobuf:"bytes,5,opt,name=cpu_request,json=cpuRequest,proto3" json:"cpu_request,omitempty"`
+	CpuLimit      string                 `protobuf:"bytes,6,opt,name=cpu_limit,json=cpuLimit,proto3" json:"cpu_limit,omitempty"`
+	MemoryRequest string                 `protobuf:"bytes,7,opt,name=memory_request,json=memoryRequest,proto3" json:"memory_request,omitempty"`
+	MemoryLimit   string                 `protobuf:"bytes,8,opt,name=memory_limit,json=memoryLimit,proto3" json:"memory_limit,omitempty"`
+	Storages      []*StorageConfig       `protobuf:"bytes,9,rep,name=storages,proto3" json:"storages,omitempty"`
+	Envs          []*EnvVar              `protobuf:"bytes,10,rep,name=envs,proto3" json:"envs,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateDeploymentRequest) Reset() {
+	*x = CreateDeploymentRequest{}
+	mi := &file_podservice_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateDeploymentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateDeploymentRequest) ProtoMessage() {}
+
+func (x *CreateDeploymentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateDeploymentRequest.ProtoReflect.Descriptor instead.
+func (*CreateDeploymentRequest) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CreateDeploymentRequest) GetPodName() string {
+	if x != nil {
+		return x.PodName
+	}
+	return ""
+}
+
+func (x *CreateDeploymentRequest) GetImage() string {
+	if x != nil {
+		return x.Image
+	}
+	return ""
+}
+
+func (x *CreateDeploymentRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *CreateDeploymentRequest) GetReplicas() int32 {
+	if x != nil {
+		return x.Replicas
+	}
+	return 0
+}
+
+func (x *CreateDeploymentRequest) GetCpuRequest() string {
+	if x != nil {
+		return x.CpuRequest
+	}
+	return ""
+}
+
+func (x *CreateDeploymentRequest) GetCpuLimit() string {
+	if x != nil {
+		return x.CpuLimit
+	}
+	return ""
+}
+
+func (x *CreateDeploymentRequest) GetMemoryRequest() string {
+	if x != nil {
+		return x.MemoryRequest
+	}
+	return ""
+}
+
+func (x *CreateDeploymentRequest) GetMemoryLimit() string {
+	if x != nil {
+		return x.MemoryLimit
+	}
+	return ""
+}
+
+func (x *CreateDeploymentRequest) GetStorages() []*StorageConfig {
+	if x != nil {
+		return x.Storages
+	}
+	return nil
+}
+
+func (x *CreateDeploymentRequest) GetEnvs() []*EnvVar {
+	if x != nil {
+		return x.Envs
+	}
+	return nil
+}
+
+type CreateDeploymentReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateDeploymentReply) Reset() {
+	*x = CreateDeploymentReply{}
+	mi := &file_podservice_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateDeploymentReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateDeploymentReply) ProtoMessage() {}
+
+func (x *CreateDeploymentReply) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateDeploymentReply.ProtoReflect.Descriptor instead.
+func (*CreateDeploymentReply) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *CreateDeploymentReply) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *CreateDeploymentReply) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type DeleteDeploymentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PodName       string                 `protobuf:"bytes,1,opt,name=pod_name,json=podName,proto3" json:"pod_name,omitempty"`
+	Namespace     string                 `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteDeploymentRequest) Reset() {
+	*x = DeleteDeploymentRequest{}
+	mi := &file_podservice_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteDeploymentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteDeploymentRequest) ProtoMessage() {}
+
+func (x *DeleteDeploymentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteDeploymentRequest.ProtoReflect.Descriptor instead.
+func (*DeleteDeploymentRequest) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *DeleteDeploymentRequest) GetPodName() string {
+	if x != nil {
+		return x.PodName
+	}
+	return ""
+}
+
+func (x *DeleteDeploymentRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+type DeleteDeploymentReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteDeploymentReply) Reset() {
+	*x = DeleteDeploymentReply{}
+	mi := &file_podservice_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteDeploymentReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteDeploymentReply) ProtoMessage() {}
+
+func (x *DeleteDeploymentReply) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteDeploymentReply.ProtoReflect.Descriptor instead.
+func (*DeleteDeploymentReply) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *DeleteDeploymentReply) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeleteDeploymentReply) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 type CreatePodRequest struct {
-	state     protoimpl.MessageState `protogen:"open.v1"`
-	PodName   string                 `protobuf:"bytes,1,opt,name=pod_name,json=podName,proto3" json:"pod_name,omitempty"`
-	Image     string                 `protobuf:"bytes,2,opt,name=image,proto3" json:"image,omitempty"`
-	Namespace string                 `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"` // 测试固定传 test
-	// 副本数量与资源配额限制
-	Replicas      int32  `protobuf:"varint,4,opt,name=replicas,proto3" json:"replicas,omitempty"`
-	CpuRequest    string `protobuf:"bytes,5,opt,name=cpu_request,json=cpuRequest,proto3" json:"cpu_request,omitempty"`
-	CpuLimit      string `protobuf:"bytes,6,opt,name=cpu_limit,json=cpuLimit,proto3" json:"cpu_limit,omitempty"`
-	MemoryRequest string `protobuf:"bytes,7,opt,name=memory_request,json=memoryRequest,proto3" json:"memory_request,omitempty"`
-	MemoryLimit   string `protobuf:"bytes,8,opt,name=memory_limit,json=memoryLimit,proto3" json:"memory_limit,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PodName       string                 `protobuf:"bytes,1,opt,name=pod_name,json=podName,proto3" json:"pod_name,omitempty"`
+	Image         string                 `protobuf:"bytes,2,opt,name=image,proto3" json:"image,omitempty"`
+	Namespace     string                 `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	CpuRequest    string                 `protobuf:"bytes,5,opt,name=cpu_request,json=cpuRequest,proto3" json:"cpu_request,omitempty"`
+	CpuLimit      string                 `protobuf:"bytes,6,opt,name=cpu_limit,json=cpuLimit,proto3" json:"cpu_limit,omitempty"`
+	MemoryRequest string                 `protobuf:"bytes,7,opt,name=memory_request,json=memoryRequest,proto3" json:"memory_request,omitempty"`
+	MemoryLimit   string                 `protobuf:"bytes,8,opt,name=memory_limit,json=memoryLimit,proto3" json:"memory_limit,omitempty"`
+	Storages      []*StorageConfig       `protobuf:"bytes,9,rep,name=storages,proto3" json:"storages,omitempty"`
+	Envs          []*EnvVar              `protobuf:"bytes,10,rep,name=envs,proto3" json:"envs,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreatePodRequest) Reset() {
 	*x = CreatePodRequest{}
-	mi := &file_podservice_proto_msgTypes[0]
+	mi := &file_podservice_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51,7 +878,7 @@ func (x *CreatePodRequest) String() string {
 func (*CreatePodRequest) ProtoMessage() {}
 
 func (x *CreatePodRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_podservice_proto_msgTypes[0]
+	mi := &file_podservice_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -64,7 +891,7 @@ func (x *CreatePodRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreatePodRequest.ProtoReflect.Descriptor instead.
 func (*CreatePodRequest) Descriptor() ([]byte, []int) {
-	return file_podservice_proto_rawDescGZIP(), []int{0}
+	return file_podservice_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *CreatePodRequest) GetPodName() string {
@@ -86,13 +913,6 @@ func (x *CreatePodRequest) GetNamespace() string {
 		return x.Namespace
 	}
 	return ""
-}
-
-func (x *CreatePodRequest) GetReplicas() int32 {
-	if x != nil {
-		return x.Replicas
-	}
-	return 0
 }
 
 func (x *CreatePodRequest) GetCpuRequest() string {
@@ -123,6 +943,20 @@ func (x *CreatePodRequest) GetMemoryLimit() string {
 	return ""
 }
 
+func (x *CreatePodRequest) GetStorages() []*StorageConfig {
+	if x != nil {
+		return x.Storages
+	}
+	return nil
+}
+
+func (x *CreatePodRequest) GetEnvs() []*EnvVar {
+	if x != nil {
+		return x.Envs
+	}
+	return nil
+}
+
 type CreatePodReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
@@ -133,7 +967,7 @@ type CreatePodReply struct {
 
 func (x *CreatePodReply) Reset() {
 	*x = CreatePodReply{}
-	mi := &file_podservice_proto_msgTypes[1]
+	mi := &file_podservice_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -145,7 +979,7 @@ func (x *CreatePodReply) String() string {
 func (*CreatePodReply) ProtoMessage() {}
 
 func (x *CreatePodReply) ProtoReflect() protoreflect.Message {
-	mi := &file_podservice_proto_msgTypes[1]
+	mi := &file_podservice_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -158,7 +992,7 @@ func (x *CreatePodReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreatePodReply.ProtoReflect.Descriptor instead.
 func (*CreatePodReply) Descriptor() ([]byte, []int) {
-	return file_podservice_proto_rawDescGZIP(), []int{1}
+	return file_podservice_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *CreatePodReply) GetSuccess() bool {
@@ -185,7 +1019,7 @@ type DeletePodRequest struct {
 
 func (x *DeletePodRequest) Reset() {
 	*x = DeletePodRequest{}
-	mi := &file_podservice_proto_msgTypes[2]
+	mi := &file_podservice_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -197,7 +1031,7 @@ func (x *DeletePodRequest) String() string {
 func (*DeletePodRequest) ProtoMessage() {}
 
 func (x *DeletePodRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_podservice_proto_msgTypes[2]
+	mi := &file_podservice_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -210,7 +1044,7 @@ func (x *DeletePodRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeletePodRequest.ProtoReflect.Descriptor instead.
 func (*DeletePodRequest) Descriptor() ([]byte, []int) {
-	return file_podservice_proto_rawDescGZIP(), []int{2}
+	return file_podservice_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *DeletePodRequest) GetPodName() string {
@@ -237,7 +1071,7 @@ type DeletePodReply struct {
 
 func (x *DeletePodReply) Reset() {
 	*x = DeletePodReply{}
-	mi := &file_podservice_proto_msgTypes[3]
+	mi := &file_podservice_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -249,7 +1083,7 @@ func (x *DeletePodReply) String() string {
 func (*DeletePodReply) ProtoMessage() {}
 
 func (x *DeletePodReply) ProtoReflect() protoreflect.Message {
-	mi := &file_podservice_proto_msgTypes[3]
+	mi := &file_podservice_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -262,7 +1096,7 @@ func (x *DeletePodReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeletePodReply.ProtoReflect.Descriptor instead.
 func (*DeletePodReply) Descriptor() ([]byte, []int) {
-	return file_podservice_proto_rawDescGZIP(), []int{3}
+	return file_podservice_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *DeletePodReply) GetSuccess() bool {
@@ -279,12 +1113,180 @@ func (x *DeletePodReply) GetMessage() string {
 	return ""
 }
 
+type GetPodRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PodName       string                 `protobuf:"bytes,1,opt,name=pod_name,json=podName,proto3" json:"pod_name,omitempty"`
+	Namespace     string                 `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPodRequest) Reset() {
+	*x = GetPodRequest{}
+	mi := &file_podservice_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPodRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPodRequest) ProtoMessage() {}
+
+func (x *GetPodRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPodRequest.ProtoReflect.Descriptor instead.
+func (*GetPodRequest) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetPodRequest) GetPodName() string {
+	if x != nil {
+		return x.PodName
+	}
+	return ""
+}
+
+func (x *GetPodRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+type GetPodReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Status        string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
+	Image         string                 `protobuf:"bytes,4,opt,name=image,proto3" json:"image,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPodReply) Reset() {
+	*x = GetPodReply{}
+	mi := &file_podservice_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPodReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPodReply) ProtoMessage() {}
+
+func (x *GetPodReply) ProtoReflect() protoreflect.Message {
+	mi := &file_podservice_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPodReply.ProtoReflect.Descriptor instead.
+func (*GetPodReply) Descriptor() ([]byte, []int) {
+	return file_podservice_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *GetPodReply) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *GetPodReply) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GetPodReply) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *GetPodReply) GetImage() string {
+	if x != nil {
+		return x.Image
+	}
+	return ""
+}
+
 var File_podservice_proto protoreflect.FileDescriptor
 
 const file_podservice_proto_rawDesc = "" +
 	"\n" +
-	"\x10podservice.proto\"\x85\x02\n" +
-	"\x10CreatePodRequest\x12\x19\n" +
+	"\x10podservice.proto\"2\n" +
+	"\x06EnvVar\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value\"\x8e\x01\n" +
+	"\rStorageConfig\x12\x12\n" +
+	"\x04type\x18\x01 \x01(\tR\x04type\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1d\n" +
+	"\n" +
+	"mount_path\x18\x03 \x01(\tR\tmountPath\x12\x1b\n" +
+	"\thost_path\x18\x04 \x01(\tR\bhostPath\x12\x19\n" +
+	"\bpvc_name\x18\x05 \x01(\tR\apvcName\"^\n" +
+	"\n" +
+	"PortConfig\x12\x12\n" +
+	"\x04port\x18\x01 \x01(\x05R\x04port\x12\x1f\n" +
+	"\vtarget_port\x18\x02 \x01(\x05R\n" +
+	"targetPort\x12\x1b\n" +
+	"\tnode_port\x18\x03 \x01(\x05R\bnodePort\"\x8c\x02\n" +
+	"\x14CreateServiceRequest\x12!\n" +
+	"\fservice_name\x18\x01 \x01(\tR\vserviceName\x12\x1c\n" +
+	"\tnamespace\x18\x02 \x01(\tR\tnamespace\x12\x12\n" +
+	"\x04type\x18\x03 \x01(\tR\x04type\x12?\n" +
+	"\bselector\x18\x04 \x03(\v2#.CreateServiceRequest.SelectorEntryR\bselector\x12!\n" +
+	"\x05ports\x18\x05 \x03(\v2\v.PortConfigR\x05ports\x1a;\n" +
+	"\rSelectorEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"H\n" +
+	"\x12CreateServiceReply\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"W\n" +
+	"\x14DeleteServiceRequest\x12!\n" +
+	"\fservice_name\x18\x01 \x01(\tR\vserviceName\x12\x1c\n" +
+	"\tnamespace\x18\x02 \x01(\tR\tnamespace\"H\n" +
+	"\x12DeleteServiceReply\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"T\n" +
+	"\x11GetServiceRequest\x12!\n" +
+	"\fservice_name\x18\x01 \x01(\tR\vserviceName\x12\x1c\n" +
+	"\tnamespace\x18\x02 \x01(\tR\tnamespace\"\x94\x02\n" +
+	"\x0fGetServiceReply\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x12\n" +
+	"\x04type\x18\x03 \x01(\tR\x04type\x12:\n" +
+	"\bselector\x18\x04 \x03(\v2\x1e.GetServiceReply.SelectorEntryR\bselector\x12!\n" +
+	"\x05ports\x18\x05 \x03(\v2\v.PortConfigR\x05ports\x12\x1d\n" +
+	"\n" +
+	"cluster_ip\x18\x06 \x01(\tR\tclusterIp\x1a;\n" +
+	"\rSelectorEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xd5\x02\n" +
+	"\x17CreateDeploymentRequest\x12\x19\n" +
 	"\bpod_name\x18\x01 \x01(\tR\apodName\x12\x14\n" +
 	"\x05image\x18\x02 \x01(\tR\x05image\x12\x1c\n" +
 	"\tnamespace\x18\x03 \x01(\tR\tnamespace\x12\x1a\n" +
@@ -293,7 +1295,31 @@ const file_podservice_proto_rawDesc = "" +
 	"cpuRequest\x12\x1b\n" +
 	"\tcpu_limit\x18\x06 \x01(\tR\bcpuLimit\x12%\n" +
 	"\x0ememory_request\x18\a \x01(\tR\rmemoryRequest\x12!\n" +
-	"\fmemory_limit\x18\b \x01(\tR\vmemoryLimit\"D\n" +
+	"\fmemory_limit\x18\b \x01(\tR\vmemoryLimit\x12*\n" +
+	"\bstorages\x18\t \x03(\v2\x0e.StorageConfigR\bstorages\x12\x1b\n" +
+	"\x04envs\x18\n" +
+	" \x03(\v2\a.EnvVarR\x04envs\"K\n" +
+	"\x15CreateDeploymentReply\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"R\n" +
+	"\x17DeleteDeploymentRequest\x12\x19\n" +
+	"\bpod_name\x18\x01 \x01(\tR\apodName\x12\x1c\n" +
+	"\tnamespace\x18\x02 \x01(\tR\tnamespace\"K\n" +
+	"\x15DeleteDeploymentReply\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\xb2\x02\n" +
+	"\x10CreatePodRequest\x12\x19\n" +
+	"\bpod_name\x18\x01 \x01(\tR\apodName\x12\x14\n" +
+	"\x05image\x18\x02 \x01(\tR\x05image\x12\x1c\n" +
+	"\tnamespace\x18\x03 \x01(\tR\tnamespace\x12\x1f\n" +
+	"\vcpu_request\x18\x05 \x01(\tR\n" +
+	"cpuRequest\x12\x1b\n" +
+	"\tcpu_limit\x18\x06 \x01(\tR\bcpuLimit\x12%\n" +
+	"\x0ememory_request\x18\a \x01(\tR\rmemoryRequest\x12!\n" +
+	"\fmemory_limit\x18\b \x01(\tR\vmemoryLimit\x12*\n" +
+	"\bstorages\x18\t \x03(\v2\x0e.StorageConfigR\bstorages\x12\x1b\n" +
+	"\x04envs\x18\n" +
+	" \x03(\v2\a.EnvVarR\x04envs\"D\n" +
 	"\x0eCreatePodReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"K\n" +
@@ -302,11 +1328,26 @@ const file_podservice_proto_rawDesc = "" +
 	"\tnamespace\x18\x02 \x01(\tR\tnamespace\"D\n" +
 	"\x0eDeletePodReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2n\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"H\n" +
+	"\rGetPodRequest\x12\x19\n" +
+	"\bpod_name\x18\x01 \x01(\tR\apodName\x12\x1c\n" +
+	"\tnamespace\x18\x02 \x01(\tR\tnamespace\"o\n" +
+	"\vGetPodReply\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\tR\x06status\x12\x14\n" +
+	"\x05image\x18\x04 \x01(\tR\x05image2\xd0\x03\n" +
 	"\n" +
-	"PodManager\x12/\n" +
+	"PodManager\x12D\n" +
+	"\x10CreateDeployment\x12\x18.CreateDeploymentRequest\x1a\x16.CreateDeploymentReply\x12D\n" +
+	"\x10DeleteDeployment\x12\x18.DeleteDeploymentRequest\x1a\x16.DeleteDeploymentReply\x12/\n" +
 	"\tCreatePod\x12\x11.CreatePodRequest\x1a\x0f.CreatePodReply\x12/\n" +
-	"\tDeletePod\x12\x11.DeletePodRequest\x1a\x0f.DeletePodReplyB\tZ\a./pb;pbb\x06proto3"
+	"\tDeletePod\x12\x11.DeletePodRequest\x1a\x0f.DeletePodReply\x12&\n" +
+	"\x06GetPod\x12\x0e.GetPodRequest\x1a\f.GetPodReply\x12;\n" +
+	"\rCreateService\x12\x15.CreateServiceRequest\x1a\x13.CreateServiceReply\x12;\n" +
+	"\rDeleteService\x12\x15.DeleteServiceRequest\x1a\x13.DeleteServiceReply\x122\n" +
+	"\n" +
+	"GetService\x12\x12.GetServiceRequest\x1a\x10.GetServiceReplyB\tZ\a./pb;pbb\x06proto3"
 
 var (
 	file_podservice_proto_rawDescOnce sync.Once
@@ -320,23 +1361,60 @@ func file_podservice_proto_rawDescGZIP() []byte {
 	return file_podservice_proto_rawDescData
 }
 
-var file_podservice_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_podservice_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_podservice_proto_goTypes = []any{
-	(*CreatePodRequest)(nil), // 0: CreatePodRequest
-	(*CreatePodReply)(nil),   // 1: CreatePodReply
-	(*DeletePodRequest)(nil), // 2: DeletePodRequest
-	(*DeletePodReply)(nil),   // 3: DeletePodReply
+	(*EnvVar)(nil),                  // 0: EnvVar
+	(*StorageConfig)(nil),           // 1: StorageConfig
+	(*PortConfig)(nil),              // 2: PortConfig
+	(*CreateServiceRequest)(nil),    // 3: CreateServiceRequest
+	(*CreateServiceReply)(nil),      // 4: CreateServiceReply
+	(*DeleteServiceRequest)(nil),    // 5: DeleteServiceRequest
+	(*DeleteServiceReply)(nil),      // 6: DeleteServiceReply
+	(*GetServiceRequest)(nil),       // 7: GetServiceRequest
+	(*GetServiceReply)(nil),         // 8: GetServiceReply
+	(*CreateDeploymentRequest)(nil), // 9: CreateDeploymentRequest
+	(*CreateDeploymentReply)(nil),   // 10: CreateDeploymentReply
+	(*DeleteDeploymentRequest)(nil), // 11: DeleteDeploymentRequest
+	(*DeleteDeploymentReply)(nil),   // 12: DeleteDeploymentReply
+	(*CreatePodRequest)(nil),        // 13: CreatePodRequest
+	(*CreatePodReply)(nil),          // 14: CreatePodReply
+	(*DeletePodRequest)(nil),        // 15: DeletePodRequest
+	(*DeletePodReply)(nil),          // 16: DeletePodReply
+	(*GetPodRequest)(nil),           // 17: GetPodRequest
+	(*GetPodReply)(nil),             // 18: GetPodReply
+	nil,                             // 19: CreateServiceRequest.SelectorEntry
+	nil,                             // 20: GetServiceReply.SelectorEntry
 }
 var file_podservice_proto_depIdxs = []int32{
-	0, // 0: PodManager.CreatePod:input_type -> CreatePodRequest
-	2, // 1: PodManager.DeletePod:input_type -> DeletePodRequest
-	1, // 2: PodManager.CreatePod:output_type -> CreatePodReply
-	3, // 3: PodManager.DeletePod:output_type -> DeletePodReply
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	19, // 0: CreateServiceRequest.selector:type_name -> CreateServiceRequest.SelectorEntry
+	2,  // 1: CreateServiceRequest.ports:type_name -> PortConfig
+	20, // 2: GetServiceReply.selector:type_name -> GetServiceReply.SelectorEntry
+	2,  // 3: GetServiceReply.ports:type_name -> PortConfig
+	1,  // 4: CreateDeploymentRequest.storages:type_name -> StorageConfig
+	0,  // 5: CreateDeploymentRequest.envs:type_name -> EnvVar
+	1,  // 6: CreatePodRequest.storages:type_name -> StorageConfig
+	0,  // 7: CreatePodRequest.envs:type_name -> EnvVar
+	9,  // 8: PodManager.CreateDeployment:input_type -> CreateDeploymentRequest
+	11, // 9: PodManager.DeleteDeployment:input_type -> DeleteDeploymentRequest
+	13, // 10: PodManager.CreatePod:input_type -> CreatePodRequest
+	15, // 11: PodManager.DeletePod:input_type -> DeletePodRequest
+	17, // 12: PodManager.GetPod:input_type -> GetPodRequest
+	3,  // 13: PodManager.CreateService:input_type -> CreateServiceRequest
+	5,  // 14: PodManager.DeleteService:input_type -> DeleteServiceRequest
+	7,  // 15: PodManager.GetService:input_type -> GetServiceRequest
+	10, // 16: PodManager.CreateDeployment:output_type -> CreateDeploymentReply
+	12, // 17: PodManager.DeleteDeployment:output_type -> DeleteDeploymentReply
+	14, // 18: PodManager.CreatePod:output_type -> CreatePodReply
+	16, // 19: PodManager.DeletePod:output_type -> DeletePodReply
+	18, // 20: PodManager.GetPod:output_type -> GetPodReply
+	4,  // 21: PodManager.CreateService:output_type -> CreateServiceReply
+	6,  // 22: PodManager.DeleteService:output_type -> DeleteServiceReply
+	8,  // 23: PodManager.GetService:output_type -> GetServiceReply
+	16, // [16:24] is the sub-list for method output_type
+	8,  // [8:16] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_podservice_proto_init() }
@@ -350,7 +1428,7 @@ func file_podservice_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_podservice_proto_rawDesc), len(file_podservice_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
