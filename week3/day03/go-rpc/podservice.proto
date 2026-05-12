@@ -1,4 +1,4 @@
-﻿syntax = "proto3";
+syntax = "proto3";
 option go_package = "./pb;pb";
 
 service PodManager {
@@ -14,31 +14,36 @@ service PodManager {
   rpc GetService (GetServiceRequest) returns (GetServiceReply);
 }
 
+// ===== 环境变量配置 =====
 message EnvVar {
     string name = 1;
     string value = 2;
 }
 
+// ===== 存储卷配置 =====
 message StorageConfig {
-    string type = 1;
-    string name = 2;
-    string mount_path = 3;
-    string host_path = 4;
-    string pvc_name = 5;
+    string type = 1;         // e.g., "hostPath", "emptyDir", "pvc"
+    string name = 2;         // 卷名称
+    string mount_path = 3;   // 容器内挂载路径
+    
+    // 依据 type 的具体配置参数
+    string host_path = 4;    // type=hostPath 时填写
+    string pvc_name = 5;     // type=pvc 时填写
 }
 
+// ===== Service 层请求与响应 =====
 message PortConfig {
-    int32 port = 1;
-    int32 target_port = 2;
-    int32 node_port = 3;
+    int32 port = 1;          // Service 暴漏端口
+    int32 target_port = 2;   // 转发后端 Pod 端口
+    int32 node_port = 3;     // NodePort (仅在 type=NodePort 下有效)
 }
 
 message CreateServiceRequest {
     string service_name = 1;
     string namespace = 2;
-    string type = 3;
-    map<string, string> selector = 4;
-    repeated PortConfig ports = 5;
+    string type = 3; // "ClusterIP", "NodePort" 等
+    map<string, string> selector = 4; // 要代理的对应 Pod 的标签
+    repeated PortConfig ports = 5;    // 端口配置列表
 }
 
 message CreateServiceReply {
@@ -70,10 +75,13 @@ message GetServiceReply {
     string cluster_ip = 6;
 }
 
+// ===== Deployment 请求 =====
 message CreateDeploymentRequest {
   string pod_name = 1;
   string image = 2;
-  string namespace = 3;
+  string namespace = 3; // 测试固定传 test
+
+  // 副本数量与资源配额限制
   int32 replicas = 4;
   string cpu_request = 5;
   string cpu_limit = 6;
@@ -98,6 +106,7 @@ message DeleteDeploymentReply {
   string message = 2;
 }
 
+// ===== Pod ======
 message CreatePodRequest {
   string pod_name = 1;
   string image = 2;
